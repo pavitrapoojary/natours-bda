@@ -1,0 +1,40 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+  li(class=`${active ? 'side-nav--active' : ''}`)
+    a(href=`${link}`)
+      svg
+        use(xlink:href=`img/icons.svg#icon-${icon}`)
+      | #{text}
+
+block content
+  main.main
+    .user-view
+      nav.user-view__menu
+        ul.side-nav
+          +navItem('/me', 'Settings', 'settings')
+          +navItem('/my-tours', 'My bookings', 'briefcase')
+          +navItem('/my-reviews', 'My reviews', 'star')
+
+        - if (user.role === 'admin')
+          .admin-nav
+            h5.admin-nav__heading Admin
+            ul.side-nav
+              +navItem('/manage-tours', 'Manage tours', 'map')
+              +navItem('/manage-users', 'Manage users', 'users')
+              +navItem('/manage-reviews', 'Manage reviews', 'star')
+
+      .user-view__content
+        .user-view__form-container
+            h2.heading-secondary.ma-bt-lg Update Tour
+            form.form.form--updateTour
+                .form__group
+                    label.form__label(for='tourJson') Enter tour ID 
+                    input#tourJson.form__input(type='string', placeholder='Frontend is Disabled in version 1.0, would be deployed in version 1.1',required,disabled)
+                .form__group
+                    label.form__label(for='tourJson') Enter updated tour data (JSON)
+                    input#tourJson.form__input(type='string', placeholder='Frontend is Disabled in version 1.0, would be deployed in version 1.1',required,disabled)
+                .form__group
+                    button.btn.btn--green Update
+
+        
